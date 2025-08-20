@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <!-- This CSP is updated to be more permissive for img-src -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fondoqi (فندقي) - Luxury Hotel & Resort Booking</title>
     <!-- These two lines prevent the browser from requesting a favicon -->
@@ -18,16 +18,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Three.js for 3D Globe -->
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.157.0/examples/jsm/"
-        }
-      }
-    </script>
+    <!-- Three.js Libraries (Robust Loading Method) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <style>
         /* --- THEME VARIABLES --- */
@@ -363,11 +356,11 @@
     </div>
 
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
+    <script>
+        // NOTE: Changed from type="module" to a standard script tag for better compatibility.
+        
         // --- 3D GLOBE LOGIC ---
+        // THREE.js objects are now available globally from the script tags in the <head>
         const globeContainer = document.getElementById('globe-container');
         let scene, camera, renderer, earth, controls;
 
@@ -392,7 +385,7 @@
             scene.add(directionalLight);
             addPins(20);
             addAirplanes(5);
-            controls = new OrbitControls(camera, renderer.domElement);
+            controls = new THREE.OrbitControls(camera, renderer.domElement); // Use THREE.OrbitControls
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.enableZoom = false;
@@ -471,7 +464,7 @@
         const bookings = [
             { id: 1, hotelName: 'The Azure Resort', date: '2024-09-15 to 2024-09-20', status: 'upcoming' },
             { id: 2, hotelName: 'Kyoto Garden Ryokan', date: '2024-03-10 to 2024-03-15', status: 'past' },
-            { id: 3, hotelName: 'Serenity Peaks Lodge', date: '2023-12-22 to 2023-12-28', status: 'past' },
+            { id: 3, name: 'Serenity Peaks Lodge', date: '2023-12-22 to 2023-12-28', status: 'past' },
         ];
         const languages = [ { code: 'en', name: 'English' }, { code: 'ar', name: 'العربية' }, { code: 'af', name: 'Afrikaans' }, { code: 'sq', name: 'Shqip' }, { code: 'am', name: 'አማርኛ' }, { code: 'hy', name: 'Հայերեն' }, { code: 'az', name: 'Azərbaycan' }, { code: 'eu', name: 'Euskara' }, { code: 'be', name: 'Беларуская' }, { code: 'bn', name: 'বাংলা' }, { code: 'bs', name: 'Bosanski' }, { code: 'bg', name: 'Български' }, { code: 'ca', name: 'Català' }, { code: 'ceb', name: 'Cebuano' }, { code: 'ny', name: 'Chichewa' }, { code: 'zh-CN', name: '简体中文' }, { code: 'zh-TW', name: '繁體中文' }, { code: 'co', name: 'Corsu' }, { code: 'hr', name: 'Hrvatski' }, { code: 'cs', name: 'Čeština' }, { code: 'da', name: 'Dansk' }, { code: 'nl', name: 'Nederlands' }, { code: 'eo', name: 'Esperanto' }, { code: 'et', name: 'Eesti' }, { code: 'tl', name: 'Filipino' }, { code: 'fi', name: 'Suomi' }, { code: 'fr', name: 'Français' }, { code: 'fy', name: 'Frysk' }, { code: 'gl', name: 'Galego' }, { code: 'ka', name: 'ქართული' }, { code: 'de', name: 'Deutsch' }, { code: 'el', name: 'Ελληνικά' }, { code: 'gu', name: 'ગુજરાતી' }, { code: 'ht', name: 'Kreyòl Ayisyen' }, { code: 'ha', name: 'Hausa' }, { code: 'haw', name: 'ʻŌlelo Hawaiʻi' }, { code: 'iw', name: 'עברית' }, { code: 'hi', name: 'हिन्दी' }, { code: 'hmn', name: 'Hmong' }, { code: 'hu', name: 'Magyar' }, { code: 'is', name: 'Íslenska' }, { code: 'ig', name: 'Igbo' }, { code: 'id', name: 'Bahasa Indonesia' }, { code: 'ga', name: 'Gaeilge' }, { code: 'it', name: 'Italiano' }, { code: 'ja', name: '日本語' }, { code: 'jw', name: 'Basa Jawa' }, { code: 'kn', name: 'ಕನ್ನಡ' }, { code: 'kk', name: 'Қазақ' }, { code: 'km', name: 'ខ្ែរ' }, { code: 'rw', name: 'Kinyarwanda' }, { code: 'ko', name: '한국어' }, { code: 'ku', name: 'Kurdî' }, { code: 'ky', name: 'Кыргызча' }, { code: 'lo', name: 'ລາວ' }, { code: 'la', name: 'Latina' }, { code: 'lv', name: 'Latviešu' }, { code: 'lt', name: 'Lietuvių' }, { code: 'lb', name: 'Lëtzebuergesch' }, { code: 'mk', name: 'Македонски' }, { code: 'mg', name: 'Malagasy' }, { code: 'ms', name: 'Bahasa Melayu' }, { code: 'ml', name: 'മലയാളം' }, { code: 'mt', name: 'Malti' }, { code: 'mi', name: 'Māori' }, { code: 'mr', name: 'मराठी' }, { code: 'mn', name: 'Монгол' }, { code: 'my', name: 'မြန်မာ' }, { code: 'ne', name: 'नेपाली' }, { code: 'no', name: 'Norsk' }, { code: 'or', name: 'ଓଡ଼ିଆ' }, { code: 'ps', name: 'پښتو' }, { code: 'fa', name: 'فارسی' }, { code: 'pl', name: 'Polski' }, { code: 'pt', name: 'Português' }, { code: 'pa', name: 'ਪੰਜਾਬੀ' }, { code: 'ro', name: 'Română' }, { code: 'ru', name: 'Русский' }, { code: 'sm', name: 'Samoan' }, { code: 'gd', name: 'Gàidhlig' }, { code: 'sr', name: 'Српски' }, { code: 'st', name: 'Sesotho' }, { code: 'sn', name: 'Shona' }, { code: 'sd', name: 'سنڌي' }, { code: 'si', name: 'සිංහල' }, { code: 'sk', name: 'Slovenčina' }, { code: 'sl', name: 'Slovenščina' }, { code: 'so', name: 'Soomaali' }, { code: 'es', name: 'Español' }, { code: 'su', name: 'Basa Sunda' }, { code: 'sw', name: 'Kiswahili' }, { code: 'sv', name: 'Svenska' }, { code: 'tg', name: 'Тоҷикӣ' }, { code: 'ta', name: 'தமிழ்' }, { code: 'tt', name: 'Татар' }, { code: 'te', name: 'తెలుగు' }, { code: 'th', name: 'ไทย' }, { code: 'tr', name: 'Türkçe' }, { code: 'tk', name: 'Türkmen' }, { code: 'uk', name: 'Українська' }, { code: 'ur', name: 'اردو' }, { code: 'ug', name: 'ئۇيغۇر' }, { code: 'uz', name: 'Oʻzbek' }, { code: 'vi', name: 'Tiếng Việt' }, { code: 'cy', name: 'Cymraeg' }, { code: 'xh', name: 'isiXhosa' }, { code: 'yi', name: 'ייִדיש' }, { code: 'yo', name: 'Yorùbá' }, { code: 'zu', name: 'isiZulu' } ];
 
